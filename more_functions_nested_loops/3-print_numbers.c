@@ -1,13 +1,16 @@
-nclude <stdio.h>
+#include "main.h"
+#include <stdio.h>
 /**
- * _isupper - checks for uppercase character.
- * @c: integer
- * Return: if c in uppercase return (1) else return (0).
+ * print_numbers - function qui imprime les nombre de 0 a 9
  **/
-int _isupper(int c)
+void print_numbers(void)
 {
-if (c >= 'A' && c <= 'Z')
-return (1);
-else
-return (0);
+int num = 0;
+
+while (num < 10)
+{
+_putchar('0' + num);
+num++;
+}
+_putchar('\n');
 }
