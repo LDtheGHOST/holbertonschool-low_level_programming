@@ -6,10 +6,10 @@
  *
  * Return: toujours 0.
  **/
-int _isupper(int c)
+int _isupper(int c) // int est la fonction qui dis que _isupper est un nombre entier 
 {
-if (c >= 'A' && c <= 'Z')
-{
+if (c >= 'A' && c <= 'Z') // if signifie une condition dans la quel c la variable  = A es t65
+{ // && represente et
 return (1);
 }
 else
