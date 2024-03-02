@@ -4,17 +4,17 @@
  * print_diagonal -dessine une ligne diagonale sur le terminal
  * @n: nomber de fois ou le caractere \ doit etre imprime
  **/
-void print_diagonal(int n)
+void print_diagonal(int n) //function
 {
-if (n <= 0)
+if (n <= 0) //si
 {
-_putchar('\n');
+_putchar('\n');//un caractaire
 }
 else
 {
 int i, j;
 
-for (i = 0; i < n; i++)
+for (i = 0; i < n; i++)// pour, condition
 {
 for (j = 0; j < n; j++)
 {
