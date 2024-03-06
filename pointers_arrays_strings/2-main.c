@@ -49,3 +49,16 @@ printf("0x%02x", s1[i]);
 printf("\n");
 return (0);
 }
+
+{
+char *s = "hello";
+char *f;
+
+f = _strchr(s, 'l');
+
+if (f != NULL)
+{
+printf("%s\n", f);
+}
+return (0);
+}
