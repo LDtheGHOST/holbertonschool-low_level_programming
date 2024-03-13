@@ -1,44 +1,56 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stddef.h>
+
 /**
- * *str_concat - concatenates two strings.
- * @s1: string
- * @s2: string
- *
- * Return: Nothing or NULL
+ * str_concat - Concatenates two strings
+ * @s1: Text 1
+ * @s2: Text 2
+ * Return: Pointer or NULL
  **/
 char *str_concat(char *s1, char *s2)
 {
-int i, j, k, len1, len2;
-char *c;
+char *ptr;
+int i, ii;
+int size1 = _strlen(s1);
+int size2 = _strlen(s2);
+int size = (size1 * sizeof(char)) + (size2 * sizeof(char)) + 1;
 
-len1 = len2 = 0;
-
-if (s1 != NULL)
+if (size1 == 0 && size2 == 0)
 {
-i = 0;
-while (s1[i++] != '\0')
-len1++;
-}
-if (s2 != NULL)
-{
-i = 0;
-while (s2[i++] != '\0')
-len2++;
-}
-
-k = len1 = len2;
-c = (char *)malloc(sizeof(char) * (k + 1));
-if (c == NULL)
 return (NULL);
+}
+ptr = malloc(size);
+if (ptr == NULL)
+{
+return (NULL);
+}
 
-for (i = 0; i < len1; i++)
-c[i] = s1[i];
-for (j = 0; j < len2; j++, i++)
-c[i] = s2[j];
+for (i = 0; i < size1; i++)
+{
+ptr[i] = s1[i];
+}
+for (ii = 0; ii < size2; ii++)
+{
+ptr[ii + (size2 - 1)] = s2[ii];
+}
+ptr[size - 1] = '\0';
+return (ptr);
+}
 
-c[k] = '\0';
-return (c);
+/**
+ *_strlen - Return length of a string
+ * @s: (int) text
+ * Return: (int) length
+ **/
+int _strlen(char *s)
+{
+int i;
+int length = 0;
+
+for (i = 0; s[i] != '\0'; i++)
+{
+length++;
+}
+return (length);
 }
