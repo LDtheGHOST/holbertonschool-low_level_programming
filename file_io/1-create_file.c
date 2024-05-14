@@ -1,29 +1,49 @@
 #include "main.h"
 
 /**
- * create_file - creates a file with rw------- permissions
- * @filename: name of the file, if NULL, return -1
- * @text_content: contents of the file. If NULL, create an empty file
- * Return: 1 on success, -1 on failure
- **/
+ * create_file - Function that creates a file
+ * @filename: Filename to create
+ * @text_content: Content to the filename to create
+ * Return: Result
+ */
 int create_file(const char *filename, char *text_content)
 {
-	int new_file, len, wr_stat;
+	int fd;
+	ssize_t bytes_w;
 
 	if (filename == NULL)
 		return (-1);
-	new_file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-	if (new_file == -1)
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd == -1)
 		return (-1);
-	if (text_content == NULL)
+
+	if (text_content != NULL)
 	{
-		close(new_file);
-		return (1);
+		bytes_w = write(fd, text_content, _strlen(text_content));
+		if (bytes_w == -1)
+		{
+			close(fd);
+			return (-1);
+		}
 	}
-	for (len = 0; text_content[len]; len++)
-		;
-	wr_stat = write(new_file, text_content, len);
-	if (close(new_file) == -1)
-		return (-1);
-	return (wr_stat == -1 ? -1 : 1);
+	close(fd);
+	return (1);
+}
+
+/**
+ * _strlen - Return length of a string
+ * @s: (int) text
+ * Return: (int) length
+ */
+int _strlen(char *s)
+{
+	int i;
+	int length = 0;
+
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		length++;
+	}
+	return (length);
 }
