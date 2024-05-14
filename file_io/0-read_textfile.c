@@ -1,48 +1,46 @@
-#include "main.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 /**
- * read_textfile - Reads a text file and prints it.
- * @filename: Filename
- * @letters: Letters can read and print
- * Return: Count letters printed
+ * read_textfile - prints text from a file
+ *
+ * @filename: name of the file
+ * @letters: number of characters to read
+ *
+ * Return: actual number of letters read, 0 if end of file
  **/
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-int fd;
-char *buffer;
-ssize_t bytes, bytes_w;
+	int file;
+	int length, wrotechars;
+	char *buf;
 
-if (filename == NULL)
-return (0);
+	if (filename == NULL || letters == 0)
+		return (0);
+	buf = malloc(sizeof(char) * (letters));
+	if (buf == NULL)
+		return (0);
 
-fd = open(filename, O_RDONLY);
-if (fd == -1)
-return (0);
+	file = open(filename, O_RDONLY);
+	if (file == -1)
+	{
+		free(buf);
+		return (0);
+	}
+	length = read(file, buf, letters);
+	if (length == -1)
+	{
+		free(buf);
+		close(file);
+		return (0);
+	}
 
-buffer = (char *)malloc(sizeof(char) * (letters + 1));
-if (buffer == NULL)
-{
-close(fd);
-return (0);
-}
+	wrotechars = write(STDOUT_FILENO, buf, length);
 
-bytes = read(fd, buffer, letters);
-if (bytes == -1)
-{
-close(fd);
-free(buffer);
-return (0);
-}
-
-bytes_w = write(STDOUT_FILENO, buffer, bytes);
-if (bytes_w == -1 || bytes_w != bytes)
-{
-close(fd);
-free(buffer);
-return (0);
-}
-
-close(fd);
-free(buffer);
-return (bytes_w);
+	free(buf);
+	close(file);
+	if (wrotechars != length)
+		return (0);
+	return (length);
 }
